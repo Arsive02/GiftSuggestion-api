@@ -24,7 +24,7 @@ app.add_middleware(
 )
 
 
-@app.get("/api/v1/greetings")
+@app.get("/")
 def read_root():
     return {
         "status": "success",
