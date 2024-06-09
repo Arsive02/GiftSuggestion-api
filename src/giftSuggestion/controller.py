@@ -1,9 +1,11 @@
 import os
 import uuid
-
 import boto3
+import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+
+LOGGER = logging.getLogger(__name__)
 
 app = FastAPI()
 
@@ -39,7 +41,7 @@ def getProducts():
     try:
         table = dynamodb.Table('GiftSuggestion')
         items = table.scan()
-        print("ITEMS:\n", items)
+        LOGGER.info("Number of items fetched: %s", len(items['Items']))
         return {
             "status": "success",
             "response": {
@@ -73,7 +75,7 @@ async def addProduct(data: dict):
             'productURL': data['productURL']
         }
         table.put_item(Item=item)
-        print("DATA:\n", data)
+        LOGGER.info("Product added successfully")
         return {
             "status": "success",
             "response": {
