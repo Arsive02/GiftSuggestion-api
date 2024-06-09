@@ -1,19 +1,18 @@
+import os
 import uuid
-
-import uvicorn
 
 import boto3
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-import app.settings as keys
-
-
 app = FastAPI()
 
+aws_access_key_id = os.getenv('AWS_ACCESS_KEY_ID')
+aws_secret_access_key = os.getenv('AWS_SECRET_ACCESS_KEY')
+
 dynamodb = boto3.resource('dynamodb',
-                          aws_access_key_id=keys.ACCESS_KEY_ID,
-                          aws_secret_access_key=keys.ACCESS_SECRET_KEY,
+                          aws_access_key_id=aws_access_key_id,
+                          aws_secret_access_key=aws_secret_access_key,
                           region_name='us-east-1'
                           )
 
